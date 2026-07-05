@@ -18,11 +18,15 @@ import smtplib
 import ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from html.parser import HTMLParser
 import hashlib
 import time
-import sys
+
+
+# 北京时区
+BJ_TZ = timezone(timedelta(hours=8))
+
 
 # ============================================================
 # 配置 - 请根据实际情况修改以下内容
@@ -497,7 +501,7 @@ def build_cbet_email(item):
         lines.append(f'<p style="color:#999;margin:0;">==================</p>')
 
     lines.append(f'<p><strong>链接:</strong> <a href="{item["url"]}">{item["url"]}</a></p>')
-    lines.append(f'<p style="color:#999;font-size:12px;">自动发送于 {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>')
+    lines.append(f'<p style="color:#999;font-size:12px;">自动发送于 {datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")}</p>')
     lines.append('</body></html>')
     return '\n'.join(lines)
 
@@ -518,111 +522,9 @@ def build_tocp_email(item):
     if item.get('url'):
         lines.append(f'<p><strong>链接:</strong> <a href="{item["url"]}">{item["url"]}</a></p>')
 
-    lines.append(f'<p style="color:#999;font-size:12px;">自动发送于 {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>')
+    lines.append(f'<p style="color:#999;font-size:12px;">自动发送于 {datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")}</p>')
     lines.append('</body></html>')
     return '\n'.join(lines)
-
-
-# ============================================================
-# 测试邮件
-# ============================================================
-
-def test_email():
-    """发送测试邮件"""
-    print("\n[*] 发送测试邮件...")
-    body = f"""<!DOCTYPE html>
-<html><head><meta charset="utf-8"></head><body>
-<h2>CBET & TOCP 监控测试邮件</h2>
-<p>这是一封测试邮件，用于验证SMTP邮件发送配置是否正确。</p>
-<p>如果您收到此邮件，说明邮件发送功能正常工作。</p>
-<hr>
-<p style="color:#999;font-size:12px;">发送时间: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>
-</body></html>"""
-    return send_email("[测试] CBET & TOCP 监控系统测试邮件", body)
-
-
-def test_full_email():
-    """完整模拟测试：获取最新条目并发送真实格式的邮件（不修改已见记录）"""
-    print("\n[*] 完整模拟测试：获取最新 CBET 和 TOCP 条目，发送真实格式邮件...\n")
-
-    # --- CBET ---
-    print("[*] 获取 CBET 最新条目...")
-    try:
-        html = fetch_url(CBET_URL)
-        items = parse_cbet_items(html)
-        if items:
-            # 按 ID 排序，取最新的
-            sorted_items = sorted(items.values(), key=lambda x: x['id'], reverse=True)
-            latest = sorted_items[0]
-            print(f"  [+] 最新 CBET: {latest['id']}: {latest.get('title', '')[:60]}")
-            email_body = build_cbet_email(latest)
-            subject = f"[测试-CBET] {latest['id'].replace('CBET', 'CBET ', 1)}: {latest.get('title', '')[:50]}"
-            send_email(subject, email_body)
-        else:
-            print("  [!] 未解析到 CBET 条目")
-    except Exception as e:
-        print(f"  [!] CBET 测试失败: {e}")
-
-    # --- TOCP ---
-    print("\n[*] 获取 TOCP 最新条目...")
-    try:
-        html = fetch_url(TOCP_URL)
-        items = parse_tocp_items(html)
-        if items:
-            # 取最新的条目（按日期排序）
-            sorted_items = sorted(items.values(), key=lambda x: x.get('date', ''), reverse=True)
-            latest = sorted_items[0]
-            print(f"  [+] 最新 TOCP: {latest.get('title', '')[:60]}")
-            email_body = build_tocp_email(latest)
-            subject = f"[测试-TOCP] {latest.get('title', '')[:50]}"
-            send_email(subject, email_body)
-        else:
-            print("  [!] 未解析到 TOCP 条目")
-    except Exception as e:
-        print(f"  [!] TOCP 测试失败: {e}")
-
-    print("\n[*] 完整模拟测试完成")
-
-
-def simulate_new():
-    """模拟新条目：临时删除最新一条已见记录，触发完整邮件流程（不修改真实缓存）"""
-    print("\n[*] 模拟新条目：将最新一条已见记录临时移除，触发完整检查...\n")
-
-    # 备份原始数据
-    cbet_seen_backup = load_seen(CBET_SEEN_FILE)
-    tocp_seen_backup = load_seen(TOCP_SEEN_FILE)
-
-    # 修改内存中的 seen 数据，删除最新一条
-    cbet_seen = dict(cbet_seen_backup)
-    tocp_seen = dict(tocp_seen_backup)
-
-    if cbet_seen:
-        latest_key = sorted(cbet_seen.keys(), reverse=True)[0]
-        removed = cbet_seen.pop(latest_key)
-        print(f"  [*] 临时移除 CBET 已见记录: {removed.get('id', latest_key)}")
-    else:
-        print("  [*] CBET 无已见记录，无法模拟")
-
-    if tocp_seen:
-        latest_key = sorted(tocp_seen.keys(), reverse=True)[0]
-        removed = tocp_seen.pop(latest_key)
-        print(f"  [*] 临时移除 TOCP 已见记录: {removed.get('title', latest_key)[:60]}")
-    else:
-        print("  [*] TOCP 无已见记录，无法模拟")
-
-    # 保存修改后的 seen 数据
-    save_seen(CBET_SEEN_FILE, cbet_seen)
-    save_seen(TOCP_SEEN_FILE, tocp_seen)
-
-    try:
-        # 运行正常检查，会触发邮件
-        check_cbet()
-        check_tocp()
-    finally:
-        # 恢复原始数据
-        save_seen(CBET_SEEN_FILE, cbet_seen_backup)
-        save_seen(TOCP_SEEN_FILE, tocp_seen_backup)
-        print("\n[*] 已恢复原始已见记录，模拟完成")
 
 
 # ============================================================
@@ -779,40 +681,13 @@ def check_tocp(dry_run=False):
 
 
 def main():
-    dry_run = '--dry-run' in sys.argv or '--dry' in sys.argv
-    test_mode = '--test' in sys.argv
-    test_full = '--test-full' in sys.argv
-    simulate = '--simulate' in sys.argv
-
     print("=" * 60)
     print("  CBET & TOCP 自动监控系统")
     print(f"  运行时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    if dry_run:
-        print("  *** 试运行模式 (不发送邮件) ***")
-    if test_full:
-        print("  *** 完整模拟测试模式 ***")
-    if simulate:
-        print("  *** 模拟新条目模式 (临时删除最新已见记录) ***")
     print("=" * 60)
 
-    if test_mode:
-        test_email()
-        return
-
-    if test_full:
-        test_full_email()
-        return
-
-    if simulate:
-        simulate_new()
-        return
-
-    if dry_run:
-        check_cbet(dry_run=True)
-        check_tocp(dry_run=True)
-    else:
-        check_cbet()
-        check_tocp()
+    check_cbet()
+    check_tocp()
 
     print(f"\n[*] 检查完成 - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
