@@ -19,6 +19,7 @@ on:
         options:
           - normal
           - test
+          - test-full
           - dry-run
 
 jobs:
@@ -58,6 +59,8 @@ jobs:
           MODE="${{ inputs.mode || 'normal' }}"
           if [ "$MODE" = "test" ]; then
             python monitor.py --test
+          elif [ "$MODE" = "test-full" ]; then
+            python monitor.py --test-full
           elif [ "$MODE" = "dry-run" ]; then
             python monitor.py --dry-run
           else
