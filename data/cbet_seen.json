@@ -1,10 +1,15 @@
 {
+  "CBET5712": {
+    "id": "CBET5712",
+    "title": "(7040) HARWOOD",
+    "date": "2026-07-04",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005712.txt"
+  },
   "CBET5711": {
     "id": "CBET5711",
     "title": "V2104 AQUILAE = NOVA AQUILAE 2026",
-    "date": "2026-07-04 20:27:13 UTC (2026-07-05 04:27:13 UTC+8)",
-    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005711.txt",
-    "_sent": true
+    "date": "2026-07-04",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005711.txt"
   },
   "CBET5710": {
     "id": "CBET5710",

@@ -420,8 +420,9 @@ def load_seen(filepath):
 
 
 def save_seen(filepath, seen):
+    sorted_seen = dict(sorted(seen.items(), key=lambda x: x[1].get('date', ''), reverse=True))
     with open(filepath, 'w', encoding='utf-8') as f:
-        json.dump(seen, f, ensure_ascii=False, indent=2)
+        json.dump(sorted_seen, f, ensure_ascii=False, indent=2)
 
 
 def find_new_items(current_items, seen):
