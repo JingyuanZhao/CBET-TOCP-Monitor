@@ -496,6 +496,7 @@ def build_cbet_email(item):
     print(f'    获取正文: {item["url"]}')
     content = fetch_cbet_content(item['url'])
     if content:
+        content = content.strip()
         lines.append(f'<p style="color:#999;margin:0;">==================</p>')
         lines.append(f'<p style="white-space:pre-wrap;margin:0;">{content}</p>')
         lines.append(f'<p style="color:#999;margin:0;">==================</p>')
