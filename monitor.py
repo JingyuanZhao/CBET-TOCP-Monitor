@@ -477,7 +477,7 @@ def build_cbet_email(item):
     lines = []
     lines.append('<!DOCTYPE html>')
     lines.append('<html><head><meta charset="utf-8"></head><body style="font-size:15px;">')
-    lines.append(f'<p style="font-weight:bold;font-size:15px;">{cbet_display}: {item.get("title", "")}</p>')
+    lines.append(f'<p style="font-weight:bold;font-size:18px;">{cbet_display}: {item.get("title", "")}</p>')
     lines.append('<hr>')
 
     if item.get('date'):
