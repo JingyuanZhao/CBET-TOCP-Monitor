@@ -244,12 +244,14 @@ def fetch_cbet_content(url):
         # 如果是纯文本文件（.txt URL），直接返回
         if url.lower().endswith('.txt'):
             content = content.strip()
+            content = re.sub(r'\n{3,}', '\n\n', content)
             return content[:8000] if len(content) > 8000 else content
 
         # 如果是HTML，解析 body
         body_match = re.search(r'<body[^>]*>(.*?)</body>', content, re.DOTALL | re.IGNORECASE)
         body_html = body_match.group(1) if body_match else content
         text = strip_html(body_html)
+        text = re.sub(r'\n{3,}', '\n\n', text)
         return text[:8000] if len(text) > 8000 else text
     except Exception as e:
         return f"获取正文失败: {e}"
@@ -496,7 +498,6 @@ def build_cbet_email(item):
     print(f'    获取正文: {item["url"]}')
     content = fetch_cbet_content(item['url'])
     if content:
-        content = content.strip()
         lines.append(f'<p style="color:#999;margin:0;">==================</p>')
         lines.append(f'<p style="white-space:pre-wrap;margin:0;">{content}</p>')
         lines.append(f'<p style="color:#999;margin:0;">==================</p>')
