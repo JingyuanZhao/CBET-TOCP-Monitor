@@ -1,32 +1,13 @@
 # CBET & TOCP 自动监控 - GitHub Actions 定时运行
-# 电脑关机也能按时检查，每30分钟一次
+# 每30分钟检查一次，发现新公告自动发送邮件
 
 name: CBET-TOCP-Monitor
 
 on:
   schedule:
     # 每30分钟运行一次 (UTC时间，北京时间+8)
-    # 例如 0,30 分运行
     - cron: '*/30 * * * *'
-  # 支持手动触发测试
   workflow_dispatch:
-    inputs:
-      mode:
-        description: '运行模式'
-        required: true
-        type: choice
-        default: 'normal'
-        options:
-          - normal
-          - test
-          - test-full
-          - dry-run
-          - forget
-      forget_ids:
-        description: '要遗忘的 CBET/TOCP ID（逗号分隔，如 CBET5712,CBET5711 或 TOCP 条目ID）'
-        required: false
-        type: string
-        default: ''
 
 jobs:
   monitor:
@@ -51,22 +32,9 @@ jobs:
           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
-        run: |
-          MODE="${{ inputs.mode || 'normal' }}"
-          if [ "$MODE" = "test" ]; then
-            python monitor.py --test
-          elif [ "$MODE" = "test-full" ]; then
-            python monitor.py --test-full
-          elif [ "$MODE" = "dry-run" ]; then
-            python monitor.py --dry-run
-          elif [ "$MODE" = "forget" ]; then
-            python monitor.py --forget "${{ inputs.forget_ids }}"
-          else
-            python monitor.py
-          fi
+        run: python monitor.py
 
       - name: 提交已见记录
-        if: ${{ (inputs.mode || 'normal') == 'normal' || (inputs.mode || 'normal') == 'forget' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
