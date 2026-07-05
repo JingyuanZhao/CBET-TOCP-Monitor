@@ -477,7 +477,7 @@ def build_cbet_email(item):
     lines = []
     lines.append('<!DOCTYPE html>')
     lines.append('<html><head><meta charset="utf-8"></head><body style="font-size:15px;">')
-    lines.append(f'<p style="font-weight:bold;font-size:18px;">{cbet_display}: {item.get("title", "")}</p>')
+    lines.append(f'<p style="font-weight:bold;font-size:15px;">{cbet_display}: {item.get("title", "")}</p>')
     lines.append('<hr>')
 
     if item.get('date'):
@@ -487,7 +487,7 @@ def build_cbet_email(item):
     content = fetch_cbet_content(item['url'])
     if content:
         lines.append(f'<p style="color:#999;margin:0;">==================</p>')
-        lines.append(f'<pre style="white-space:pre-wrap;margin:0;">{content}</pre>')
+        lines.append(f'<p style="white-space:pre-wrap;margin:0;">{content}</p>')
         lines.append(f'<p style="color:#999;margin:0;">==================</p>')
 
     lines.append(f'<p><strong>链接:</strong> <a href="{item["url"]}">{item["url"]}</a></p>')
@@ -506,7 +506,7 @@ def build_tocp_email(item):
         print(f'    获取TOCP正文: {item["url"]}')
         content = fetch_tocp_content(item['url'])
         if content:
-            lines.append(f'<pre style="white-space:pre-wrap;">{content}</pre>')
+            lines.append(f'<p style="white-space:pre-wrap;">{content}</p>')
 
     lines.append(f'<p style="color:#999;">==================</p>')
     if item.get('url'):
