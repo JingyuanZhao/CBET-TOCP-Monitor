@@ -438,7 +438,7 @@ def find_new_items(current_items, seen):
 
 def send_email(subject, html_body):
     """发送邮件通知（支持多个收件人，逗号分隔）"""
-    recipients = [addr.strip() for addr in TO_EMAIL.split(',') if addr.strip()]
+    recipients = [addr.strip() for addr in TO_EMAIL.replace('，', ',').split(',') if addr.strip()]
     if not recipients:
         print("  [!] 未配置收件邮箱（TO_EMAIL 为空）")
         return False
