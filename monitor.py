@@ -446,7 +446,7 @@ def send_email(subject, html_body):
     msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
     msg['From'] = SMTP_USER
-    msg['To'] = ', '.join(recipients)
+    msg['To'] = SMTP_USER  # 收件人互相不可见，实际收件人通过 sendmail 列表发送
     msg['Date'] = datetime.now(timezone.utc).strftime('%a, %d %b %Y %H:%M:%S +0000')
 
     msg.attach(MIMEText(html_body, 'html', 'utf-8'))
