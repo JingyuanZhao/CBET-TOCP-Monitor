@@ -245,6 +245,7 @@ def fetch_cbet_content(url):
         if url.lower().endswith('.txt'):
             content = content.strip()
             content = re.sub(r'\n{3,}', '\n\n', content)
+            content = re.sub(r'^[ \t]+\(C\) Copyright', '(C) Copyright', content, flags=re.MULTILINE)
             return content[:8000] if len(content) > 8000 else content
 
         # 如果是HTML，解析 body
@@ -252,6 +253,7 @@ def fetch_cbet_content(url):
         body_html = body_match.group(1) if body_match else content
         text = strip_html(body_html)
         text = re.sub(r'\n{3,}', '\n\n', text)
+        text = re.sub(r'^[ \t]+\(C\) Copyright', '(C) Copyright', text, flags=re.MULTILINE)
         return text[:8000] if len(text) > 8000 else text
     except Exception as e:
         return f"获取正文失败: {e}"
