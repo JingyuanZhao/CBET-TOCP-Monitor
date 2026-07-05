@@ -439,38 +439,42 @@ def find_new_items(current_items, seen):
 # ============================================================
 
 def send_email(subject, html_body):
-    """发送邮件通知（支持多个收件人，逗号分隔）"""
+    """发送邮件通知（多个收件人各自单独收到，互相不可见）"""
     recipients = [addr.strip() for addr in TO_EMAIL.replace('，', ',').split(',') if addr.strip()]
     if not recipients:
         print("  [!] 未配置收件邮箱（TO_EMAIL 为空）")
         return False
 
-    msg = MIMEMultipart('alternative')
-    msg['Subject'] = subject
-    msg['From'] = SMTP_USER
-    msg['To'] = ', '.join(recipients)
-    msg['Date'] = datetime.now(timezone.utc).strftime('%a, %d %b %Y %H:%M:%S +0000')
-
-    msg.attach(MIMEText(html_body, 'html', 'utf-8'))
-
     try:
         if SMTP_PORT == 465:
-            # SSL 直连模式
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, context=context) as server:
                 server.login(SMTP_USER, SMTP_PASSWORD)
-                server.sendmail(SMTP_USER, recipients, msg.as_string())
+                for addr in recipients:
+                    msg = _build_message(subject, html_body, addr)
+                    server.sendmail(SMTP_USER, [addr], msg.as_string())
         else:
-            # STARTTLS 模式 (Gmail 587端口推荐)
             with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=30) as server:
                 server.starttls(context=ssl.create_default_context())
                 server.login(SMTP_USER, SMTP_PASSWORD)
-                server.sendmail(SMTP_USER, recipients, msg.as_string())
+                for addr in recipients:
+                    msg = _build_message(subject, html_body, addr)
+                    server.sendmail(SMTP_USER, [addr], msg.as_string())
         print(f"  [+] 邮件已发送到 {', '.join(recipients)}")
         return True
     except Exception as e:
         print(f"  [!] 邮件发送失败: {e}")
         return False
+
+
+def _build_message(subject, html_body, to_addr):
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = subject
+    msg['From'] = SMTP_USER
+    msg['To'] = to_addr
+    msg['Date'] = datetime.now(timezone.utc).strftime('%a, %d %b %Y %H:%M:%S +0000')
+    msg.attach(MIMEText(html_body, 'html', 'utf-8'))
+    return msg
 
 
 def build_cbet_email(item):
