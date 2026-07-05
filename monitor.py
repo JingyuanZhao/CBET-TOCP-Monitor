@@ -36,7 +36,7 @@ SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
 SMTP_USER = os.environ.get("SMTP_USER", "")
 SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD", "")  # Gmail应用专用密码，请通过环境变量设置
 
-# 收件邮箱
+# 收件邮箱（多个地址用逗号分隔，如 "a@x.com,b@x.com"）
 TO_EMAIL = os.environ.get("TO_EMAIL", "")
 
 # --- 监控的页面 ---
@@ -437,11 +437,16 @@ def find_new_items(current_items, seen):
 # ============================================================
 
 def send_email(subject, html_body):
-    """发送邮件通知"""
+    """发送邮件通知（支持多个收件人，逗号分隔）"""
+    recipients = [addr.strip() for addr in TO_EMAIL.split(',') if addr.strip()]
+    if not recipients:
+        print("  [!] 未配置收件邮箱（TO_EMAIL 为空）")
+        return False
+
     msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
     msg['From'] = SMTP_USER
-    msg['To'] = TO_EMAIL
+    msg['To'] = ', '.join(recipients)
     msg['Date'] = datetime.now(timezone.utc).strftime('%a, %d %b %Y %H:%M:%S +0000')
 
     msg.attach(MIMEText(html_body, 'html', 'utf-8'))
@@ -452,14 +457,14 @@ def send_email(subject, html_body):
             context = ssl.create_default_context()
             with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, context=context) as server:
                 server.login(SMTP_USER, SMTP_PASSWORD)
-                server.sendmail(SMTP_USER, [TO_EMAIL], msg.as_string())
+                server.sendmail(SMTP_USER, recipients, msg.as_string())
         else:
             # STARTTLS 模式 (Gmail 587端口推荐)
             with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=30) as server:
                 server.starttls(context=ssl.create_default_context())
                 server.login(SMTP_USER, SMTP_PASSWORD)
-                server.sendmail(SMTP_USER, [TO_EMAIL], msg.as_string())
-        print(f"  [+] 邮件已发送到 {TO_EMAIL}")
+                server.sendmail(SMTP_USER, recipients, msg.as_string())
+        print(f"  [+] 邮件已发送到 {', '.join(recipients)}")
         return True
     except Exception as e:
         print(f"  [!] 邮件发送失败: {e}")
