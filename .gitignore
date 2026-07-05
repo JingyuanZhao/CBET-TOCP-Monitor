@@ -1,0 +1,15 @@
+# 运行时数据（包含已见记录，每个环境独立）
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

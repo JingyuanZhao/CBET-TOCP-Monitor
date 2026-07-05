@@ -1,0 +1,50 @@
+# CBET & TOCP 自动监控 - GitHub Actions 定时运行
+# 电脑关机也能按时检查，每30分钟一次
+
+name: CBET-TOCP-Monitor
+
+on:
+  schedule:
+    # 每30分钟运行一次 (UTC时间，北京时间+8)
+    # 例如 0,30 分运行
+    - cron: '*/30 * * * *'
+  # 支持手动触发测试
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 恢复已见记录缓存
+        uses: actions/cache/restore@v4
+        id: cache-restore
+        with:
+          path: data
+          key: cbet-tocp-data-${{ github.run_number }}
+          restore-keys: |
+            cbet-tocp-data-
+
+      - name: 运行监控脚本
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          TO_EMAIL: ${{ secrets.TO_EMAIL }}
+        run: python monitor.py
+
+      - name: 保存已见记录缓存
+        uses: actions/cache/save@v4
+        with:
+          path: data
+          key: cbet-tocp-data-${{ github.run_number }}
