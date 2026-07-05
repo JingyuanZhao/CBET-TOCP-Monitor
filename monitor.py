@@ -239,6 +239,7 @@ def fetch_cbet_content(url):
 
         # 如果是纯文本文件（.txt URL），直接返回
         if url.lower().endswith('.txt'):
+            content = content.strip()
             return content[:8000] if len(content) > 8000 else content
 
         # 如果是HTML，解析 body
