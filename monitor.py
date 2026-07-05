@@ -563,8 +563,9 @@ def test_full_email():
         html = fetch_url(TOCP_URL)
         items = parse_tocp_items(html)
         if items:
-            # 取第一个条目
-            latest = list(items.values())[0]
+            # 取最新的条目（按日期排序）
+            sorted_items = sorted(items.values(), key=lambda x: x.get('date', ''), reverse=True)
+            latest = sorted_items[0]
             print(f"  [+] 最新 TOCP: {latest.get('title', '')[:60]}")
             email_body = build_tocp_email(latest)
             subject = f"[测试-TOCP] {latest.get('title', '')[:50]}"
@@ -736,7 +737,7 @@ def check_tocp(dry_run=False):
 
         if new_items:
             print(f"  [+] 发现 {len(new_items)} 条新TOCP报告:")
-            for item_id, item in new_items.items():
+            for item_id, item in sorted(new_items.items(), key=lambda x: x[1].get('date', ''), reverse=True):
                 print(f"      - {item.get('title', 'N/A')[:60]}")
 
             # 首次运行 - 只记录不发送邮件
@@ -747,7 +748,7 @@ def check_tocp(dry_run=False):
                 save_seen(TOCP_SEEN_FILE, seen)
                 print(f"  [+] 已更新本地记录")
             else:
-                for item_id, item in new_items.items():
+                for item_id, item in sorted(new_items.items(), key=lambda x: x[1].get('date', ''), reverse=True):
                     email_body = build_tocp_email(item)
                     subject = f"[TOCP] {item.get('title', '')[:50]}"
                     if send_email(subject, email_body):
