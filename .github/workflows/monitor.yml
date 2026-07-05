@@ -10,6 +10,16 @@ on:
     - cron: '*/30 * * * *'
   # 支持手动触发测试
   workflow_dispatch:
+    inputs:
+      mode:
+        description: '运行模式'
+        required: true
+        type: choice
+        default: 'normal'
+        options:
+          - normal
+          - test
+          - dry-run
 
 jobs:
   monitor:
@@ -28,6 +38,7 @@ jobs:
           python-version: '3.11'
 
       - name: 恢复已见记录缓存
+        if: ${{ (inputs.mode || 'normal') != 'test' }}
         uses: actions/cache/restore@v4
         id: cache-restore
         with:
@@ -43,9 +54,18 @@ jobs:
           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           TO_EMAIL: ${{ secrets.TO_EMAIL }}
-        run: python monitor.py
+        run: |
+          MODE="${{ inputs.mode || 'normal' }}"
+          if [ "$MODE" = "test" ]; then
+            python monitor.py --test
+          elif [ "$MODE" = "dry-run" ]; then
+            python monitor.py --dry-run
+          else
+            python monitor.py
+          fi
 
       - name: 保存已见记录缓存
+        if: ${{ (inputs.mode || 'normal') == 'normal' }}
         uses: actions/cache/save@v4
         with:
           path: data
