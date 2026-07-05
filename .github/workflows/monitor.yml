@@ -21,6 +21,12 @@ on:
           - test
           - test-full
           - dry-run
+          - forget
+      forget_ids:
+        description: '要遗忘的 CBET/TOCP ID（逗号分隔，如 CBET5712,CBET5711 或 TOCP 条目ID）'
+        required: false
+        type: string
+        default: ''
 
 jobs:
   monitor:
@@ -38,16 +44,6 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: 恢复已见记录缓存
-        if: ${{ (inputs.mode || 'normal') != 'test' }}
-        uses: actions/cache/restore@v4
-        id: cache-restore
-        with:
-          path: data
-          key: cbet-tocp-data-${{ github.run_number }}
-          restore-keys: |
-            cbet-tocp-data-
-
       - name: 运行监控脚本
         env:
           SMTP_USER: ${{ secrets.SMTP_USER }}
@@ -63,13 +59,17 @@ jobs:
             python monitor.py --test-full
           elif [ "$MODE" = "dry-run" ]; then
             python monitor.py --dry-run
+          elif [ "$MODE" = "forget" ]; then
+            python monitor.py --forget "${{ inputs.forget_ids }}"
           else
             python monitor.py
           fi
 
-      - name: 保存已见记录缓存
-        if: ${{ (inputs.mode || 'normal') == 'normal' }}
-        uses: actions/cache/save@v4
-        with:
-          path: data
-          key: cbet-tocp-data-${{ github.run_number }}
+      - name: 提交已见记录
+        if: ${{ (inputs.mode || 'normal') == 'normal' || (inputs.mode || 'normal') == 'forget' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git diff --staged --quiet || git commit -m "更新已见记录 [skip ci]"
+          git push

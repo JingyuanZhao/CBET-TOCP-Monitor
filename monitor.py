@@ -577,6 +577,47 @@ def test_full_email():
     print("\n[*] 完整模拟测试完成")
 
 
+def simulate_new():
+    """模拟新条目：临时删除最新一条已见记录，触发完整邮件流程（不修改真实缓存）"""
+    print("\n[*] 模拟新条目：将最新一条已见记录临时移除，触发完整检查...\n")
+
+    # 备份原始数据
+    cbet_seen_backup = load_seen(CBET_SEEN_FILE)
+    tocp_seen_backup = load_seen(TOCP_SEEN_FILE)
+
+    # 修改内存中的 seen 数据，删除最新一条
+    cbet_seen = dict(cbet_seen_backup)
+    tocp_seen = dict(tocp_seen_backup)
+
+    if cbet_seen:
+        latest_key = sorted(cbet_seen.keys(), reverse=True)[0]
+        removed = cbet_seen.pop(latest_key)
+        print(f"  [*] 临时移除 CBET 已见记录: {removed.get('id', latest_key)}")
+    else:
+        print("  [*] CBET 无已见记录，无法模拟")
+
+    if tocp_seen:
+        latest_key = sorted(tocp_seen.keys(), reverse=True)[0]
+        removed = tocp_seen.pop(latest_key)
+        print(f"  [*] 临时移除 TOCP 已见记录: {removed.get('title', latest_key)[:60]}")
+    else:
+        print("  [*] TOCP 无已见记录，无法模拟")
+
+    # 保存修改后的 seen 数据
+    save_seen(CBET_SEEN_FILE, cbet_seen)
+    save_seen(TOCP_SEEN_FILE, tocp_seen)
+
+    try:
+        # 运行正常检查，会触发邮件
+        check_cbet()
+        check_tocp()
+    finally:
+        # 恢复原始数据
+        save_seen(CBET_SEEN_FILE, cbet_seen_backup)
+        save_seen(TOCP_SEEN_FILE, tocp_seen_backup)
+        print("\n[*] 已恢复原始已见记录，模拟完成")
+
+
 # ============================================================
 # 主逻辑
 # ============================================================
@@ -734,6 +775,7 @@ def main():
     dry_run = '--dry-run' in sys.argv or '--dry' in sys.argv
     test_mode = '--test' in sys.argv
     test_full = '--test-full' in sys.argv
+    simulate = '--simulate' in sys.argv
 
     print("=" * 60)
     print("  CBET & TOCP 自动监控系统")
@@ -742,6 +784,8 @@ def main():
         print("  *** 试运行模式 (不发送邮件) ***")
     if test_full:
         print("  *** 完整模拟测试模式 ***")
+    if simulate:
+        print("  *** 模拟新条目模式 (临时删除最新已见记录) ***")
     print("=" * 60)
 
     if test_mode:
@@ -750,6 +794,10 @@ def main():
 
     if test_full:
         test_full_email()
+        return
+
+    if simulate:
+        simulate_new()
         return
 
     if dry_run:
