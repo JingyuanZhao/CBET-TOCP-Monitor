@@ -1,4 +1,18 @@
 {
+  "CBET5714": {
+    "id": "CBET5714",
+    "title": "(59195) 1999_BG2",
+    "date": "2026-07-09 21:05:42 UTC (2026-07-10 05:05:42 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005714.txt",
+    "_sent": true
+  },
+  "CBET5713": {
+    "id": "CBET5713",
+    "title": "COMET P/2025 OZ_695 = P/2005 S2 (SKIFF)",
+    "date": "2026-07-09 21:05:38 UTC (2026-07-10 05:05:38 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005713.txt",
+    "_sent": true
+  },
   "CBET5712": {
     "id": "CBET5712",
     "title": "(7040) HARWOOD",
