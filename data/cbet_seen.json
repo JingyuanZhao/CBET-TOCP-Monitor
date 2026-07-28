@@ -54,6 +54,13 @@
     "date": "2026-07-04",
     "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005711.txt"
   },
+  "CBET5719": {
+    "id": "CBET5719",
+    "title": "(39249) 2000 YR_88",
+    "date": "2026-06-30 20:11:55 UTC (2026-07-01 04:11:55 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005710.txt",
+    "_sent": true
+  },
   "CBET5710": {
     "id": "CBET5710",
     "title": "COMET P/2026 M2 = P/2018 VN_2 = P/2010 W10 (LEONARD)",
