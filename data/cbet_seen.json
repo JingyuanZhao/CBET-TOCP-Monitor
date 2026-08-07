@@ -1,4 +1,18 @@
 {
+  "CBET5721": {
+    "id": "CBET5721",
+    "title": "COMET C/2026 O1 (PANSTARRS)",
+    "date": "2026-08-07 18:06:10 UTC (2026-08-08 02:06:10 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005721.txt",
+    "_sent": true
+  },
+  "CBET5720": {
+    "id": "CBET5720",
+    "title": "COMET C/2026 M5 (PANSTARRS)",
+    "date": "2026-08-07 18:05:56 UTC (2026-08-08 02:05:56 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005720.txt",
+    "_sent": true
+  },
   "CBET5718": {
     "id": "CBET5718",
     "title": "COMET 161P/HARTLEY-IRAS",
