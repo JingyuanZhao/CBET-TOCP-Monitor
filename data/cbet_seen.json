@@ -1,4 +1,11 @@
 {
+  "CBET5725": {
+    "id": "CBET5725",
+    "title": "COMET C/2026 N1 (PANSTARRS)",
+    "date": "2026-08-22 01:46:39 UTC (2026-08-22 09:46:39 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005725.txt",
+    "_sent": true
+  },
   "CBET5723": {
     "id": "CBET5723",
     "title": "V1452 TAURI = NOVA TAURI 2026 = TCP J05210763+2338194",
