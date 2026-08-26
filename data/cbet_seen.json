@@ -1,4 +1,25 @@
 {
+  "CBET5728": {
+    "id": "CBET5728",
+    "title": "COMET P/2026 P1 (PANSTARRS)",
+    "date": "2026-08-26 02:48:51 UTC (2026-08-26 10:48:51 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005728.txt",
+    "_sent": true
+  },
+  "CBET5727": {
+    "id": "CBET5727",
+    "title": "(6543) SENNA",
+    "date": "2026-08-26 02:48:47 UTC (2026-08-26 10:48:47 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005727.txt",
+    "_sent": true
+  },
+  "CBET5726": {
+    "id": "CBET5726",
+    "title": "COMET P/2026 N2",
+    "date": "2026-08-26 02:48:42 UTC (2026-08-26 10:48:42 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005726.txt",
+    "_sent": true
+  },
   "CBET5725": {
     "id": "CBET5725",
     "title": "COMET C/2026 N1 (PANSTARRS)",
