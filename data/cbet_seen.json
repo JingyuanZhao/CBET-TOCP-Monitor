@@ -1,4 +1,18 @@
 {
+  "CBET5731": {
+    "id": "CBET5731",
+    "title": "(25251) 1998 UL_25",
+    "date": "2026-08-26 16:00:33 UTC (2026-08-27 00:00:33 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005731.txt",
+    "_sent": true
+  },
+  "CBET5730": {
+    "id": "CBET5730",
+    "title": "(8007) 1988 RU_6",
+    "date": "2026-08-26 16:00:29 UTC (2026-08-27 00:00:29 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005730.txt",
+    "_sent": true
+  },
   "CBET5728": {
     "id": "CBET5728",
     "title": "COMET P/2026 P1 (PANSTARRS)",
