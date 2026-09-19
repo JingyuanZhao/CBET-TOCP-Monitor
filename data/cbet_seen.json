@@ -1,4 +1,18 @@
 {
+  "CBET5741": {
+    "id": "CBET5741",
+    "title": "(471155) 2010 GF_65",
+    "date": "2026-09-18 23:36:01 UTC (2026-09-19 07:36:01 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005741.txt",
+    "_sent": true
+  },
+  "CBET5740": {
+    "id": "CBET5740",
+    "title": "COMET P/2026 R1 (PANSTARRS)",
+    "date": "2026-09-18 23:35:58 UTC (2026-09-19 07:35:58 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005740.txt",
+    "_sent": true
+  },
   "CBET5739": {
     "id": "CBET5739",
     "title": "(556068) 2014 JR_80",
