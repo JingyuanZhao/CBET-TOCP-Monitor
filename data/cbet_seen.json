@@ -1,4 +1,32 @@
 {
+  "CBET5748": {
+    "id": "CBET5748",
+    "title": "(99918) 1998 SQ_2",
+    "date": "2026-09-23 15:14:20 UTC (2026-09-23 23:14:20 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005748.txt",
+    "_sent": true
+  },
+  "CBET5747": {
+    "id": "CBET5747",
+    "title": "(501214) 2013 TC_146",
+    "date": "2026-09-23 15:14:15 UTC (2026-09-23 23:14:15 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005747.txt",
+    "_sent": true
+  },
+  "CBET5746": {
+    "id": "CBET5746",
+    "title": "2026 RW_1",
+    "date": "2026-09-23 14:58:08 UTC (2026-09-23 22:58:08 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005746.txt",
+    "_sent": true
+  },
+  "CBET5745": {
+    "id": "CBET5745",
+    "title": "COMET P/2009 Y2 (KOWALSKI)",
+    "date": "2026-09-23 14:58:04 UTC (2026-09-23 22:58:04 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005745.txt",
+    "_sent": true
+  },
   "CBET5742": {
     "id": "CBET5742",
     "title": "(1757) PORVOO",
