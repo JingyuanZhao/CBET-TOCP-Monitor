@@ -1,4 +1,18 @@
 {
+  "CBET5755": {
+    "id": "CBET5755",
+    "title": "(34260) 2000 QG_120",
+    "date": "2026-10-07 20:01:40 UTC (2026-10-08 04:01:40 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005755.txt",
+    "_sent": true
+  },
+  "CBET5754": {
+    "id": "CBET5754",
+    "title": "COMET C/2026 R2 (LEONARD) = NEW CATALINA COMET",
+    "date": "2026-10-07 20:01:36 UTC (2026-10-08 04:01:36 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005754.txt",
+    "_sent": true
+  },
   "CBET5753": {
     "id": "CBET5753",
     "title": "NEW CATALINA COMET",
