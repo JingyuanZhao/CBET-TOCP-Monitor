@@ -1,4 +1,18 @@
 {
+  "CBET5757": {
+    "id": "CBET5757",
+    "title": "COMET C/2026 S2 (ATLAS)",
+    "date": "2026-10-08 18:22:10 UTC (2026-10-09 02:22:10 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005757.txt",
+    "_sent": true
+  },
+  "CBET5756": {
+    "id": "CBET5756",
+    "title": "COMET C/2026 S1 (EUCLID)",
+    "date": "2026-10-08 18:22:05 UTC (2026-10-09 02:22:05 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005756.txt",
+    "_sent": true
+  },
   "CBET5755": {
     "id": "CBET5755",
     "title": "(34260) 2000 QG_120",
