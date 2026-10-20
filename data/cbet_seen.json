@@ -1,4 +1,32 @@
 {
+  "CBET5764": {
+    "id": "CBET5764",
+    "title": "(27150) ANNASANTE",
+    "date": "2026-10-20 21:08:31 UTC (2026-10-21 05:08:31 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005764.txt",
+    "_sent": true
+  },
+  "CBET5763": {
+    "id": "CBET5763",
+    "title": "V8056 SAGITTARII = TCP J17541876-2736362",
+    "date": "2026-10-20 20:23:36 UTC (2026-10-21 04:23:36 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005763.txt",
+    "_sent": true
+  },
+  "CBET5762": {
+    "id": "CBET5762",
+    "title": "COMET C/2026 Q1 (ATLAS)",
+    "date": "2026-10-20 20:23:32 UTC (2026-10-21 04:23:32 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005762.txt",
+    "_sent": true
+  },
+  "CBET5761": {
+    "id": "CBET5761",
+    "title": "COMET P/2026 T1 (ATLAS)",
+    "date": "2026-10-20 20:23:29 UTC (2026-10-21 04:23:29 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005761.txt",
+    "_sent": true
+  },
   "CBET5760": {
     "id": "CBET5760",
     "title": "(87830) 2000 SL_173",
