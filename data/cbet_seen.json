@@ -1,4 +1,18 @@
 {
+  "CBET5771": {
+    "id": "CBET5771",
+    "title": "COMET C/2026 P4 (PANSTARRS)",
+    "date": "2026-11-05 00:30:12 UTC (2026-11-05 08:30:12 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005771.txt",
+    "_sent": true
+  },
+  "CBET5770": {
+    "id": "CBET5770",
+    "title": "COMET P/2026 U1 (GAFTON)",
+    "date": "2026-11-04 21:01:41 UTC (2026-11-05 05:01:41 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005770.txt",
+    "_sent": true
+  },
   "CBET5769": {
     "id": "CBET5769",
     "title": "COMET P/2026 U1 (GAFTON)",
