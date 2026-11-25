@@ -1,4 +1,18 @@
 {
+  "CBET5782": {
+    "id": "CBET5782",
+    "title": "COMET P/2015 X3 (PANSTARRS) = 2026 TT_127",
+    "date": "2026-11-24 20:07:26 UTC (2026-11-25 04:07:26 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005782.txt",
+    "_sent": true
+  },
+  "CBET5783": {
+    "id": "CBET5783",
+    "title": "(101027) 1998 QL_71",
+    "date": "2026-11-24 20:02:05 UTC (2026-11-25 04:02:05 UTC+8)",
+    "url": "http://www.cbat.eps.harvard.edu/iau/cbet/005700/CBET005783.txt",
+    "_sent": true
+  },
   "CBET5781": {
     "id": "CBET5781",
     "title": "(6140) KUBOKAWA",
